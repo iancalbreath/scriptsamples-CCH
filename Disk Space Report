@@ -1,0 +1,19 @@
+
+REM *** Scripts created by Ian never affect files or folders created by anyone other than Ian on Ian's local hard drive.***
+REM *** Script functions do not extend past the HDD on LOCALPC01.  ***
+
+
+robocopy "C:\Users\ian\Documents\ScriptFiles\DiskSpaceTemplate" "C:\Users\ian\Documents\DiskSpaceReports" "DiskSpaceRemaining.xlsx" /mt
+
+timeout /t 1
+
+REM Now we rename the file uniformly and append the current date.  "Swing" represents my shift, and is also appended.
+cd "C:\Users\ian\Documents\ScriptFiles"
+ren "DiskSpaceRemaining.xlsx" "DiskSpace_%date:~10,4%%date:~4,2%%date:~7,2%_Swing.xlsx"
+
+REM Finally, we'll open the file we have created and renamed.
+start "C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE" "C:\Users\ian\Documents\ScriptFiles\DiskSpace_%date:~10,4%%date:~4,2%%date:~7,2%_Swing.xlsx"
+
+
+REM This batch script copied and pasted a copy of our spreadsheet template into a destination directory.  The script then renamed the file to match the other reports, and added the current date to the filename. 
+REM Finally, the script opens the file so that I can input the data that was produced from an SQL report that queries our server's drives for disk space under a certain threshold.
