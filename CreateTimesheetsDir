@@ -1,0 +1,30 @@
+
+@echo off
+setlocal enabledelayedexpansion
+
+for /f %%K in ('powershell -command "Get-Date -Format yyyy"') do set "Cyear=%%K"
+set year-fn=!Cyear!
+for /f %%A in ('powershell -command "Get-Date -Format MM"') do set "dmonth=%%A"
+
+set "month-dn="
+if "!dmonth!"=="01" set "month-dn=Jan"
+if "!dmonth!"=="02" set "month-dn=Feb"
+if "!dmonth!"=="03" set "month-dn=Mar"
+if "!dmonth!"=="04" set "month-dn=Apr"
+if "!dmonth!"=="05" set "month-dn=May"
+if "!dmonth!"=="06" set "month-dn=Jun"
+if "!dmonth!"=="07" set "month-dn=Jul"
+if "!dmonth!"=="08" set "month-dn=Aug"
+if "!dmonth!"=="09" set "month-dn=Sep"
+if "!dmonth!"=="10" set "month-dn=Oct"
+if "!dmonth!"=="11" set "month-dn=Nov"
+if "!dmonth!"=="12" set "month-dn=Dec"
+
+mkdir "C:\Users\ian\Documents\Timesheets\!month-dn! !Cyear!"
+endlocal
+
+rem This .bat should be scheduled to run on the 1st of each month using Task Scheduler.  I have a simple CMD command to do that, as you cannot schedule things for the 1st of each month on Task Scheduler's GUI. 
+rem schtasks /create /tn "CreateTSDir" /tr "C:/Users/ian/Documents/Timesheets/CreateTSD/CreateTSD.bat" /sc monthly /st 15:30 
+
+rem This .bat creates a folder inside my Timesheets folder that is named with the current abbreviated month and current year.  ex. "Jan 2024"
+rem It's to be partnered with my CreatePDFs.bat file which creates two .pdf files that are copies of a blank timesheet template that are named with the current month and year. One is for the first half of the month, and one is for the second.
