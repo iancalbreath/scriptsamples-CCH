@@ -1,0 +1,47 @@
+@echo off
+
+rem This is the second half of my blank Timesheet creation process.  This file and CreateTimesheetDir should be scheduled monthly on the first of the month using the command provided at the end.
+rem In conjunction they will create a directory with the current month and year, and two .pdf files inside that constitute my monthly timesheet files, ready to be filled out and submitted to HR.
+
+
+setlocal enabledelayedexpansion
+
+for /f %%G in ('powershell -command "Get-Date -Format MM"') do set "Cmonth=%%G"
+set month-fn=!Cmonth!
+
+for /f %%K in ('powershell -command "Get-Date -Format yyyy"') do set "Cyear=%%K"
+set year-fn=!Cyear!
+
+for /f %%A in ('powershell -command "Get-Date -Format MM"') do set "dmonth=%%A"
+
+set "month-dn="
+if "!dmonth!"=="01" set "month-dn=Jan"
+if "!dmonth!"=="02" set "month-dn=Feb"
+if "!dmonth!"=="03" set "month-dn=Mar"
+if "!dmonth!"=="04" set "month-dn=Apr"
+if "!dmonth!"=="05" set "month-dn=May"
+if "!dmonth!"=="06" set "month-dn=Jun"
+if "!dmonth!"=="07" set "month-dn=Jul"
+if "!dmonth!"=="08" set "month-dn=Aug"
+if "!dmonth!"=="09" set "month-dn=Sep"
+if "!dmonth!"=="10" set "month-dn=Oct"
+if "!dmonth!"=="11" set "month-dn=Nov"
+if "!dmonth!"=="12" set "month-dn=Dec"
+
+REM robocopy PDF template to destination folder
+robocopy "C:\Users\ian\Documents\Timesheets\Template" "C:\Users\ian\Documents\Timesheets\!month-dn! !year-fn!" "Calbreath, Ian TS.pdf"
+
+REM rename file to correct name
+ren "C:\Users\ian\Documents\Timesheets\!month-dn! !year-fn!\Calbreath, Ian TS.pdf" "Calbreath, Ian !month-fn!.15.!year-fn!.pdf"
+
+timeout /t 1
+
+REM robocopy PDF template to destination folder a 2nd time
+robocopy "C:\Users\ian\Documents\Timesheets\Template" "C:\Users\ian\Documents\Timesheets\!month-dn! !year-fn!" "Calbreath, Ian TS.pdf"
+
+REM rename file #2
+ren "C:\Users\ian\Documents\Timesheets\!month-dn! !year-fn!\Calbreath, Ian TS.pdf" "Calbreath, Ian !month-fn!.30.!year-fn!.pdf"
+
+endlocal
+
+rem Here's the command to schedule this monthly task: schtasks /create /tn "CreatePDFs" /tr "C:/Users/ian/Documents/Timesheets/CreateTimesheets/CreatePDFs.bat" /sc monthly /st 15:30:30
