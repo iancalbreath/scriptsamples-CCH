@@ -1,7 +1,7 @@
 @echo off
 
 REM *** Scripts created by Ian never affect files or folders created by anyone other than Ian on Ian's local hard drive.***
-REM *** Script functions do not extend past the HDD on LOCALPC01.  ***
+REM *** Script functions do not extend past the local drive on GOVPC01.  ***
 
 
 robocopy "C:\Users\ian\Documents\ScriptFiles\DiskSpaceTemplate" "C:\Users\ian\Documents\DiskSpaceReports" "DiskSpaceRemaining.xlsx" /mt
