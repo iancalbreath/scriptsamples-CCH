@@ -1,8 +1,8 @@
 @echo off
 
 rem This is the second half of my blank Timesheet creation process.  This file and CreateTimesheetDir should be scheduled monthly on the first of the month using the command provided at the end.
-rem In conjunction they will create a directory with the current month and year, and two .pdf files inside that constitute my monthly timesheet files, ready to be filled out and submitted to HR.
-
+rem In conjunction they will create a directory with the current month and year, and then create two .pdf files inside of it that constitute my monthly timesheet files.  
+rem This automates my timesheet file and folder management and organization process.
 
 setlocal enabledelayedexpansion
 
